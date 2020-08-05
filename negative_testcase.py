@@ -7,15 +7,12 @@ import numpy as np
 import unittest
 import os
 import sys
-
 this_dir = os.getcwd()
 sys.path.append(os.path.join(this_dir, '..'))
 
 from operator_testcase import OperatorTestCase
-
-
-class NegTestCase(OperatorTestCase):
-
+class NegTestCase(OperatorTestCase): 
+#调用OperatorTestCase类
     def init_data(self):
         data1 = [
             [[-1, -1, -1],
@@ -29,6 +26,7 @@ class NegTestCase(OperatorTestCase):
         x1 = np.array([data1])
         self.x = [x1]
         self.op_name = 'neg'
+        #将init_data对象转化为NegTestCase对象
         super(self.__class__, self).init_data()
 
     def tf_net(self):
