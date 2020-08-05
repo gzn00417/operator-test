@@ -13,11 +13,24 @@
 ## 8: sum
 ## 9：sin
 ## 网址：
-squeeze:https://tensorflow.google.cn/api_docs/python/tf/squeeze
-sum:https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/sum?hl=en
-pow:https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/pow?hl=en
-sin:https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/sin?hl=en
-Transpose：https://tensorflow.google.cn/api_docs/python/tf/transpose?hl=zh_cn
-neg:https://tensorflow.google.cn/versions/r1.15/api_docs/python/tf/math/negative?hl=zh_cn
-    https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/negate?hl=en
-ExtractImagePatches:https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/extract-image-patches?hl=en
+squeeze:
+https://tensorflow.google.cn/api_docs/python/tf/squeeze
+
+sum:
+https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/sum?hl=en
+
+pow:
+https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/pow?hl=en
+
+sin:
+https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/sin?hl=en
+
+Transpose：
+https://tensorflow.google.cn/api_docs/python/tf/transpose?hl=zh_cn
+
+neg:
+https://tensorflow.google.cn/versions/r1.15/api_docs/python/tf/math/negative?hl=zh_cn
+https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/negate?hl=en
+
+ExtractImagePatches:
+https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/extract-image-patches?hl=en
