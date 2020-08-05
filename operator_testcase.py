@@ -6,9 +6,7 @@ import tensorflow as tf
 import numpy as np
 import unittest
 
-
 per_process_gpu_memory_fraction = 0.01
-
 
 class OperatorTestCase(unittest.TestCase):
 
@@ -193,98 +191,15 @@ class OperatorTestCase(unittest.TestCase):
         with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) \
                 as sess:
             return sess.run(output, feed_dict=feed_dict)
-
-    def pb_to_caffe(self):
-        '''
-        pb 文件转 caffe，中间产生的临时文件暂不删除
-        '''
-        from mmdnn.conversion.tensorflow.tensorflow_frozenparser import \
-            TensorflowParser2
-        weights = 'models/%s.pb' % self.op_name
-
-        dstNodeName = [self.output_name]
-
-        parser = TensorflowParser2(weights,
-                                   self.inputshapes,
-                                   self.input_names,
-                                   dstNodeName)
-
-        temp_filename = 'models/%s_IR' % self.op_name
-        # convertToIR，生成中间临时模型
-        parser.run(temp_filename)
-
         ##############################################################
-
-        from mmdnn.conversion.caffe.caffe_emitter import CaffeEmitter
-
-        IRModelPath = "%s.pb" % temp_filename
-        IRWeightPath = "%s.npy" % temp_filename
-        emitter = CaffeEmitter((IRModelPath, IRWeightPath))
-
-        emitter_name = 'models/%s_emitter' % self.op_name
-        dstModelPath = "%s.py" % emitter_name
-        dstWeightPath = "%s.npy" % emitter_name
-        phase = 'test'
-        # 生成转换代码和权重，用于将中间模型保存成caffe模型
-        emitter.run(dstModelPath, dstWeightPath, phase)
-
         ##############################################################
-
-        dstFramework = 'caffe'
-        outputModel = 'models/%s' % self.op_name
-
-        from mmdnn.conversion._script.dump_code import dump_code
-
-        # 生成caffe模型
-        dump_code(dstFramework, emitter_name + '.py',
-                  emitter_name + '.npy', outputModel, None)
-
-    def restore_from_caffe(self):
-        '''
-        测试caffe
-        '''
-        import caffe
-
-        outputModel = 'models/%s' % self.op_name
-        caffe_model = '%s.caffemodel' % outputModel
-        deploy_proto = '%s.prototxt' % outputModel
-
-        caffe.set_mode_gpu()
-        net = caffe.Net(deploy_proto, caffe_model, caffe.TEST)
-
-        for i in range(len(self.x)):
-            temp = self.x[i]
-            if len(self.inputshapes[i]) == 3:
-                temp = np.transpose(temp, [0, 3, 1, 2])
-            net.blobs["%s_%s" % (self.input_name, i)].data[...] = temp
-
-        rst = net.forward()[self.output_name]
-        if len(self.inputshapes[i]) == 3:
-            rst = np.transpose(rst, [0, 2, 3, 1])
-
-        return rst
-
-    def test(self):
-        self.init_data()
-        tf_rst = self.save_ckpt()
-        self.ckpt_to_pb('models/%s.ckpt' % self.op_name,
-                        'models/%s.pb' % self.op_name, self.output_name)
-        self.pb_to_caffe()
-        ckpt_rst = self.restore_from_ckpt()
-        self.assertEqual(np.array_equal(ckpt_rst, tf_rst), True)
-        pb_rst = self.restore_from_pb()
-        self.assertEqual(np.array_equal(pb_rst, tf_rst), True)
-        caffe_rst = self.restore_from_caffe()
 
         print("###################################")
         print("###################################")
         print("tensorflow result = %s" % tf_rst)
         print("###################################")
-        print("caffe result = %s" % caffe_rst)
         print("###################################")
         print("###################################")
 
         tf_rst = np.around(tf_rst, decimals=3)
-        caffe_rst = np.around(caffe_rst, decimals=3)
-
         self.assertEqual(np.array_equal(caffe_rst, tf_rst), True)
