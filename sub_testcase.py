@@ -13,7 +13,7 @@ sys.path.append(os.path.join(this_dir, '..'))
 
 from operator_testcase import OperatorTestCase
 
-
+#继承OperatorTestCase 因为涉及多个算子 所以方便处理 实际不需要 只是单元测试而已 只需要定义两个函数即可（def输入数据的函数+def算子）
 class SubTestCase(OperatorTestCase):
 
     def init_data(self):
