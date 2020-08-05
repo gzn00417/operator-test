@@ -5,7 +5,7 @@
  需要实现9个算子分别为
 ## 1：squeeze
 ## 2：neg
-## 3:concatv2较难 可先不看
+## 3:concatv2
 ## 4:pow
 ## 5:BatchMatMuiv2 较难 可先不看
 ## 6:Transpose
@@ -32,5 +32,5 @@ neg:
 https://tensorflow.google.cn/versions/r1.15/api_docs/python/tf/math/negative?hl=zh_cn
 https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/negate?hl=en
 
-ExtractImagePatches:
+ExtractImagePatches: (C++)
 https://tensorflow.google.cn/api_docs/cc/class/tensorflow/ops/extract-image-patches?hl=en
