@@ -63,7 +63,9 @@ class OperatorTestCase(unittest.TestCase):
         self.init_data()
         tf_rst = self.save_ckpt()
         #精确小数点3位 用于做输出数据精确度比对
+        '''
         tf_rst = np.around(tf_rst, decimals=3)
+        '''
         # caffe_rst = np.around(caffe_rst, decimals=3)
         #读入C++保存的文件 然后对比参数 是否精确到小数点3位 如果比对误差小于小数点后三位 则返回true
         #需要修改equal(caffe_rst, tf_rst) 括号中的部分
