@@ -1,5 +1,4 @@
 # Operator-test
-测试某开源框架中的tensorflow的缺失算子
 ## class OperatorTestCase为父类 其余为子类并继承父类
 # python版本完成两个模块
 （def数据定义与输入+def算子模块（其实就是调用tf.xx方法）
