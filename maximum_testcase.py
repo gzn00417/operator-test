@@ -38,7 +38,7 @@ class MaximumTestCase(OperatorTestCase):
         ]
 
         self.x = [np.array([x1]), np.array([x2])]
-        self.op_name = 'maximum'
+        # self.op_name = 'maximum'
 
         super(self.__class__, self).init_data()
 
