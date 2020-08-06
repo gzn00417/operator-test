@@ -28,7 +28,7 @@ class ReluTestCase(OperatorTestCase):
         ]
 
         self.x = [np.array([x1])]
-        self.op_name = 'relu'
+        # self.op_name = 'relu'
 
         super(self.__class__, self).init_data()
 
