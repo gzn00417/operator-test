@@ -12,8 +12,9 @@ sys.path.append(os.path.join(this_dir, '..'))
 
 from operator_testcase import OperatorTestCase
 class NegTestCase(OperatorTestCase): 
-#调用OperatorTestCase类
+    #调用OperatorTestCase类
     def init_data(self):
+        #data1理解为输入张量，C，H，W三个维度
         data1 = [
             [[-1, -1, -1],
              [4, 5, 6],
@@ -29,6 +30,7 @@ class NegTestCase(OperatorTestCase):
         #将init_data对象转化为NegTestCase对象
         super(self.__class__, self).init_data()
 
+     #定义一个神经网络
     def tf_net(self):
         # 输入
         inputs = self.inputs()
