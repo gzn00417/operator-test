@@ -38,7 +38,7 @@ class SubTestCase(OperatorTestCase):
         ]
 
         self.x = [np.array([x1]), np.array([x2])]
-        self.op_name = 'sub'
+        #self.op_name = 'sub'
 
         super(self.__class__, self).init_data()
 
