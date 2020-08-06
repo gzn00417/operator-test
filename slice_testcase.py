@@ -13,7 +13,6 @@ sys.path.append(os.path.join(this_dir, '..'))
 
 from operator_testcase import OperatorTestCase
 
-
 class SliceTestCase(OperatorTestCase):
 
     def init_data(self):
@@ -24,7 +23,7 @@ class SliceTestCase(OperatorTestCase):
         ]
 
         self.x = [np.array([x1])]
-        self.op_name = 'slice'
+        #self.op_name = 'slice'
 
         super(self.__class__, self).init_data()
 
