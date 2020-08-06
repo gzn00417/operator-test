@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # coding=utf-8
-"""module docstring"""
 
 import tensorflow as tf
 import numpy as np
 import unittest
 
 #per_process_gpu_memory_fraction = 0.01
-
 class OperatorTestCase(unittest.TestCase):
 
     def init_data(self):
@@ -27,18 +25,18 @@ class OperatorTestCase(unittest.TestCase):
 
     def inputs(self):
         tf.reset_default_graph()
+        //防止没有算子读进来报错 ‘加个名字nouse’
         tf.Variable(tf.zeros([1]), name='nouse')
 
         inputs = list()
         for i in range(len(self.x)):
+            //查看TF官方文档 placeholder使用方法
             input = tf.placeholder(dtype=tf.float32, shape=[None] + self.inputshapes[i],
                                    name="%s_%s" % (self.input_name, i))
             inputs.append(input)
-
         return inputs
 
     def tf_net(self):
-        # implement by subclass
         pass
 
     def save_ckpt(self):
@@ -51,7 +49,7 @@ class OperatorTestCase(unittest.TestCase):
 
         # input and output
         feed_dict = dict()
-
+        //保存算子输出结果
         for i in range(0, len(self.x)):
             input = tf.get_default_graph().get_tensor_by_name(
                 "%s:0" % self.input_names[i])
@@ -74,7 +72,7 @@ class OperatorTestCase(unittest.TestCase):
             #result = sess.run(output, feed_dict=feed_dict)
             #saver.save(sess, "models/%s.ckpt" % self.op_name)
             #return result
-
+    '''
     def restore_weight_from_ckpt(self):
         '''
         只从ckpt读取权重
@@ -82,7 +80,7 @@ class OperatorTestCase(unittest.TestCase):
         tf.reset_default_graph()
         self.tf_net()
         saver = tf.train.Saver()  # 声明tf.train.Saver类用于保存模型
-
+     '''
         feed_dict = dict()
         # input and output
         for i in range(0, len(self.x)):
@@ -94,7 +92,7 @@ class OperatorTestCase(unittest.TestCase):
         output = tf.get_default_graph().get_tensor_by_name(
             "%s:0" % self.output_name)
 
-        '''
+        ''' #这段不用看
         gpu_options = tf.GPUOptions(
            per_process_gpu_memory_fraction=per_process_gpu_memory_fraction)
 
@@ -123,34 +121,14 @@ class OperatorTestCase(unittest.TestCase):
 
         output = tf.get_default_graph().get_tensor_by_name(
             "%s:0" % self.output_name)
-        '''
-        gpu_options = tf.GPUOptions(
-            per_process_gpu_memory_fraction=per_process_gpu_memory_fraction)
-
-        with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) \
-                as sess:
-            saver.restore(sess, 'models/%s.ckpt' % self.op_name)
-            return sess.run(output, feed_dict=feed_dict)
-         '''
-
-    def ckpt_to_pb(self, ckpt_path, pb_path, output_node_names):
-        '''
-        通用方法，ckpt转pb
-        :param ckpt_path: xxx.ckpt(千万不要加后面的xxx.ckpt.data这种，到ckpt就行了!)
-        :param output_graph: PB模型保存路径
-        :param output_node_names: 模型输出节点名称，该节点名称必须是原模型中存在的节点
-        :return:
-        '''
+        
         from tensorflow import graph_util
         saver = tf.train.import_meta_graph(ckpt_path + '.meta',
                                            clear_devices=True)
         graph = tf.get_default_graph()  # 获得默认的图
         input_graph_def = graph.as_graph_def()  # 返回一个序列化的图代表当前的图
         '''
-        gpu_options = tf.GPUOptions(
-            per_process_gpu_memory_fraction=per_process_gpu_memory_fraction)
-
-        with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) \
+        with tf.Session() \
                 as sess:
             return sess.run(output, feed_dict=feed_dict)
          '''
@@ -160,8 +138,6 @@ class OperatorTestCase(unittest.TestCase):
         print("###################################")
         print("###################################")
         print("tensorflow result = %s" % tf_rst)
-        print("###################################")
-        print("###################################")
         print("###################################")
 
         tf_rst = np.around(tf_rst, decimals=3)
