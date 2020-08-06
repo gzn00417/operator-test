@@ -24,7 +24,7 @@ class SwitchTestCase(OperatorTestCase):
         x2 = 2
 
         self.x = [np.array([x1]), np.array([x2])]
-        self.op_name = 'switch'
+        #self.op_name = 'switch'
         super(self.__class__, self).init_data()
 
     def tf_net(self):
@@ -33,7 +33,7 @@ class SwitchTestCase(OperatorTestCase):
         # 算子
         pred = tf.less(inputs[0], inputs[1], name='pred')
         outputs = cf.switch(inputs[0], pred[0], name=self.output_name)
-
+    '''
     def test(self):
         self.init_data()
         tf_rst = self.save_ckpt()
@@ -60,7 +60,7 @@ class SwitchTestCase(OperatorTestCase):
         caffe_rst = np.around(caffe_rst, decimals=4)
 
         self.assertEqual(np.array_equal(caffe_rst, tf_rst), True)
-
+        '''
 
 if __name__ == '__main__':
     suite = unittest.TestSuite()
